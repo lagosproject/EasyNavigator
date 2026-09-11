@@ -342,16 +342,30 @@ def render_feature_graphic(lang_code, lang_info):
     draw.text((text_x, 140), lang_info["feature"]["title"], font=f_title, fill=WHITE)
     draw.text((text_x, 215), lang_info["feature"]["tagline"], font=f_tagline, fill=ACCENT_BLUE)
 
-    # Feature Chips
-    chip_x = text_x
-    chip_y = 285
-    for chip in lang_info["feature"]["chips"]:
+    # Feature Chips (2x2 grid to ensure zero overflow on any screen/language)
+    row1_y = 265
+    row2_y = 320
+    chips = lang_info["feature"]["chips"]
+
+    # First row: chips 0 and 1
+    curr_x = text_x
+    for chip in chips[:2]:
         bbox = f_chips.getbbox(chip)
-        cw = bbox[2] - bbox[0] + 24
+        cw = bbox[2] - bbox[0] + 28
         ch = bbox[3] - bbox[1] + 16
-        draw.rounded_rectangle([chip_x, chip_y, chip_x + cw, chip_y + ch], radius=12, fill=(35, 48, 85, 230), outline=(66, 165, 245, 150), width=1)
-        draw.text((chip_x + 12, chip_y + 8), chip, font=f_chips, fill=WHITE)
-        chip_x += cw + 12
+        draw.rounded_rectangle([curr_x, row1_y, curr_x + cw, row1_y + ch], radius=12, fill=(35, 48, 85, 230), outline=(66, 165, 245, 150), width=1)
+        draw.text((curr_x + 14, row1_y + 8), chip, font=f_chips, fill=WHITE)
+        curr_x += cw + 14
+
+    # Second row: chips 2 and 3
+    curr_x = text_x
+    for chip in chips[2:]:
+        bbox = f_chips.getbbox(chip)
+        cw = bbox[2] - bbox[0] + 28
+        ch = bbox[3] - bbox[1] + 16
+        draw.rounded_rectangle([curr_x, row2_y, curr_x + cw, row2_y + ch], radius=12, fill=(35, 48, 85, 230), outline=(66, 165, 245, 150), width=1)
+        draw.text((curr_x + 14, row2_y + 8), chip, font=f_chips, fill=WHITE)
+        curr_x += cw + 14
 
     return banner
 

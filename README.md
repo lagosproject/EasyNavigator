@@ -45,12 +45,12 @@ It is the perfect companion for quick searches, opening links from messaging app
 ## 📱 Screenshots & Showcase
 
 <p align="center">
-  <img src="assets/banner.png" alt="Easy Navigator Showcase Banner" width="100%" />
+  <img src="assets/banner.png?v=2" alt="Easy Navigator Showcase Banner" width="100%" />
 </p>
 
 | 🏠 Home Screen | 🔍 Search & Voice | 📷 QR Code Share | ⚙️ Settings Menu | 🔥 Incinerate Session |
 | :---: | :---: | :---: | :---: | :---: |
-| <img src="assets/screenshots/screen1_home.png" width="185" alt="Home Screen" /> | <img src="assets/screenshots/screen2_search.png" width="185" alt="Search and Voice" /> | <img src="assets/screenshots/screen3_qr.png" width="185" alt="QR Code Share" /> | <img src="assets/screenshots/screen4_menu.png" width="185" alt="Options Menu" /> | <img src="assets/screenshots/screen5_wipe.png" width="185" alt="Incinerate Session" /> |
+| <img src="assets/screenshots/screen1_home.png?v=2" width="185" alt="Home Screen" /> | <img src="assets/screenshots/screen2_search.png?v=2" width="185" alt="Search and Voice" /> | <img src="assets/screenshots/screen3_qr.png?v=2" width="185" alt="QR Code Share" /> | <img src="assets/screenshots/screen4_menu.png?v=2" width="185" alt="Options Menu" /> | <img src="assets/screenshots/screen5_wipe.png?v=2" width="185" alt="Incinerate Session" /> |
 
 ---
 
