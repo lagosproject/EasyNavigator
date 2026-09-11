@@ -79,7 +79,7 @@ COPY_DATA = {
         "feature": {
             "title": "Navegador fácil",
             "tagline": "Navegación Rápida & 100% Efímera",
-            "chips": ["🔒 Cero Cookies", "🎙️ Búsqueda por Voz", "📷 Escáner QR", "🔥 Incinerar Sesión"]
+            "chips": ["Cero Cookies", "Búsqueda por Voz", "Escáner QR", "Incinerar Sesión"]
         }
     },
     "en-US": {
@@ -119,7 +119,7 @@ COPY_DATA = {
         "feature": {
             "title": "Easy Navigator",
             "tagline": "Fast, Private & Ephemeral Browser",
-            "chips": ["🔒 Zero Cookies", "🎙️ Voice Search", "📷 QR Scanner", "🔥 Instant Wipe"]
+            "chips": ["Zero Cookies", "Voice Search", "QR Scanner", "Instant Wipe"]
         }
     },
     "fr-FR": {
@@ -159,7 +159,7 @@ COPY_DATA = {
         "feature": {
             "title": "Navigateur facile",
             "tagline": "Navigation Rapide & 100% Éphémère",
-            "chips": ["🔒 Zéro Cookie", "🎙️ Recherche Vocale", "📷 Scanner QR", "🔥 Effacement Instantané"]
+            "chips": ["Zéro Cookie", "Recherche Vocale", "Scanner QR", "Effacement Instantané"]
         }
     },
     "pt-PT": {
@@ -199,7 +199,7 @@ COPY_DATA = {
         "feature": {
             "title": "Navegador fácil",
             "tagline": "Navegação Rápida & 100% Efêmera",
-            "chips": ["🔒 Sem Cookies", "🎙️ Pesquisa por Voz", "📷 Leitor QR", "🔥 Limpeza Instantânea"]
+            "chips": ["Sem Cookies", "Pesquisa por Voz", "Leitor QR", "Limpeza Instantânea"]
         }
     }
 }
@@ -342,29 +342,47 @@ def render_feature_graphic(lang_code, lang_info):
     draw.text((text_x, 140), lang_info["feature"]["title"], font=f_title, fill=WHITE)
     draw.text((text_x, 215), lang_info["feature"]["tagline"], font=f_tagline, fill=ACCENT_BLUE)
 
-    # Feature Chips (2x2 grid to ensure zero overflow on any screen/language)
+    # Feature Chips (2x2 grid with vibrant accent dots to guarantee zero emoji tofu boxes)
     row1_y = 265
     row2_y = 320
     chips = lang_info["feature"]["chips"]
+    dot_colors = [
+        (0, 230, 118),   # Privacy / Zero cookies (Emerald Green)
+        (64, 196, 255),  # Voice Search (Sky Blue)
+        (255, 215, 0),   # QR Scanner (Vibrant Gold)
+        (255, 87, 34)    # Instant Wipe (Fiery Orange)
+    ]
 
     # First row: chips 0 and 1
     curr_x = text_x
-    for chip in chips[:2]:
+    for i in range(min(2, len(chips))):
+        chip = chips[i]
+        color = dot_colors[i]
         bbox = f_chips.getbbox(chip)
-        cw = bbox[2] - bbox[0] + 28
-        ch = bbox[3] - bbox[1] + 16
+        tw = bbox[2] - bbox[0]
+        th = bbox[3] - bbox[1]
+        cw = tw + 52
+        ch = th + 18
         draw.rounded_rectangle([curr_x, row1_y, curr_x + cw, row1_y + ch], radius=12, fill=(35, 48, 85, 230), outline=(66, 165, 245, 150), width=1)
-        draw.text((curr_x + 14, row1_y + 8), chip, font=f_chips, fill=WHITE)
+        dot_y = row1_y + ch // 2
+        draw.ellipse([curr_x + 16, dot_y - 5, curr_x + 26, dot_y + 5], fill=color)
+        draw.text((curr_x + 34, row1_y + 8), chip, font=f_chips, fill=WHITE)
         curr_x += cw + 14
 
     # Second row: chips 2 and 3
     curr_x = text_x
-    for chip in chips[2:]:
+    for i in range(2, min(4, len(chips))):
+        chip = chips[i]
+        color = dot_colors[i]
         bbox = f_chips.getbbox(chip)
-        cw = bbox[2] - bbox[0] + 28
-        ch = bbox[3] - bbox[1] + 16
+        tw = bbox[2] - bbox[0]
+        th = bbox[3] - bbox[1]
+        cw = tw + 52
+        ch = th + 18
         draw.rounded_rectangle([curr_x, row2_y, curr_x + cw, row2_y + ch], radius=12, fill=(35, 48, 85, 230), outline=(66, 165, 245, 150), width=1)
-        draw.text((curr_x + 14, row2_y + 8), chip, font=f_chips, fill=WHITE)
+        dot_y = row2_y + ch // 2
+        draw.ellipse([curr_x + 16, dot_y - 5, curr_x + 26, dot_y + 5], fill=color)
+        draw.text((curr_x + 34, row2_y + 8), chip, font=f_chips, fill=WHITE)
         curr_x += cw + 14
 
     return banner
