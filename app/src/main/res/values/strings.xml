@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Easy Navigator</string>
+    <string name="app_description">Simple, fast, and completely ephemeral browser. It leaves no traces, stores no cookies, and keeps zero history.</string>
+    <string name="search_or_enter_url">Search or enter URL…</string>
+    <string name="clear_text">Clear</string>
+    <string name="dictate">Voice search</string>
+    <string name="scan_qr">Scan QR Code</string>
+    <string name="quick_wipe">Incinerate Session</string>
+    <string name="more_options">More options</string>
+    <string name="back">Back</string>
+    <string name="forward">Forward</string>
+    <string name="forward_history">Forward History</string>
+    <string name="no_forward_history">No forward history available</string>
+    <string name="refresh">Refresh</string>
+    <string name="stop">Stop</string>
+    <string name="desktop_site">Desktop Site</string>
+    <string name="pull_to_refresh">Pull to refresh</string>
+    <string name="share_link">Share Link</string>
+    <string name="show_qr_code">Show QR Code</string>
+    <string name="search_engine">Search Engine</string>
+    <string name="clear_session_title">Clear Browsing Session</string>
+    <string name="clear_session_desc">Erase all cookies, cache, and open page</string>
+    <string name="session_cleared_toast">Session incinerated. All temporary data cleared.</string>
+    <string name="close_app_title">Exit Easy Navigator?</string>
+    <string name="close_app_message">Do you want to close the app and erase all session data?</string>
+    <string name="exit_and_clear">Exit &amp; Clear</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="copy_link">Copy Link</string>
+    <string name="link_copied">Link copied to clipboard</string>
+    <string name="scan_qr_prompt">Point camera at a QR code</string>
+    <string name="camera_permission_required">Camera permission is required to scan QR codes.</string>
+    <string name="speech_not_available">Speech recognition is not available on this device.</string>
+    <string name="about_title">About Easy Navigator</string>
+    <string name="about_text">Easy Navigator v18.0\nDeveloped by lagosproject.\nPrivacy-first ephemeral browser targeting Android 16.</string>
+    <string name="custom_engine_title">Custom Search Engine</string>
+    <string name="custom_engine_hint">URL with %%s for query (e.g. https://kagi.com/search?q=%%s)</string>
+    <string name="invalid_custom_engine">URL must contain %%s</string>
+    <string name="save">Save</string>
+</resources>

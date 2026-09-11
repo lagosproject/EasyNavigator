@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="12dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_engine"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorOnSurface"
+        android:layout_marginBottom="16dp" />
+
+    <RadioGroup
+        android:id="@+id/rgSearchEngines"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Google"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/rbDuckDuckGo"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="DuckDuckGo"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/rbBing"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Bing"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/rbEcosia"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Ecosia"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/rbCustom"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/custom_engine_title"
+            android:textSize="16sp" />
+
+    </RadioGroup>
+
+    <!-- Custom URL Input (visible when Custom is checked) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilCustomEngine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/custom_engine_hint"
+        android:visibility="gone"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCustomEngineUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri"
+            android:maxLines="1"
+            android:textSize="13sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

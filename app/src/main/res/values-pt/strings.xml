@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Navegador fácil</string>
+    <string name="app_description">Navegador simples, rápido e totalmente efêmero. Não deixa rastros, não armazena cookies e não mantém histórico.</string>
+    <string name="search_or_enter_url">Pesquisar ou digitar URL…</string>
+    <string name="clear_text">Limpar</string>
+    <string name="dictate">Pesquisa por voz</string>
+    <string name="scan_qr">Escanear código QR</string>
+    <string name="quick_wipe">Incinerar sessão</string>
+    <string name="more_options">Mais opções</string>
+    <string name="back">Voltar</string>
+    <string name="forward">Avançar</string>
+    <string name="forward_history">Páginas seguintes</string>
+    <string name="no_forward_history">Nenhum histórico seguinte disponível</string>
+    <string name="refresh">Atualizar</string>
+    <string name="stop">Parar</string>
+    <string name="desktop_site">Versão para computador</string>
+    <string name="pull_to_refresh">Puxar para atualizar</string>
+    <string name="share_link">Compartilhar link</string>
+    <string name="show_qr_code">Mostrar código QR</string>
+    <string name="search_engine">Mecanismo de pesquisa</string>
+    <string name="clear_session_title">Limpar sessão de navegação</string>
+    <string name="clear_session_desc">Apagar todos os cookies, cache e página aberta</string>
+    <string name="session_cleared_toast">Sessão incinerada. Todos os dados temporários foram apagados.</string>
+    <string name="close_app_title">Sair do Navegador fácil?</string>
+    <string name="close_app_message">Deseja fechar o aplicativo e apagar todos os dados da sessão?</string>
+    <string name="exit_and_clear">Sair e limpar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="close">Fechar</string>
+    <string name="copy_link">Copiar link</string>
+    <string name="link_copied">Link copiado para a área de transferência</string>
+    <string name="scan_qr_prompt">Aponte a câmera para um código QR</string>
+    <string name="camera_permission_required">A permissão de câmera é necessária para escanear códigos QR.</string>
+    <string name="speech_not_available">O reconhecimento de voz não está disponível neste dispositivo.</string>
+    <string name="about_title">Sobre o Navegador fácil</string>
+    <string name="about_text">Navegador fácil v18.0\nDesenvolvido por lagosproject.\nNavegador efêmero com foco em privacidade otimizado para Android 16.</string>
+    <string name="custom_engine_title">Mecanismo de pesquisa personalizado</string>
+    <string name="custom_engine_hint">URL com %%s para a consulta (ex. https://kagi.com/search?q=%%s)</string>
+    <string name="invalid_custom_engine">A URL deve conter %%s</string>
+    <string name="save">Salvar</string>
+</resources>
