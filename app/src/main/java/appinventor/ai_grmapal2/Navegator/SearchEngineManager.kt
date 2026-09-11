@@ -50,6 +50,27 @@ class SearchEngineManager(context: Context) {
             prefs.edit().putString(KEY_CUSTOM_URL, value).apply()
         }
 
+    fun extractUrlOrInput(input: String): String {
+        val trimmed = input.trim()
+        if (trimmed.isEmpty()) {
+            return getHomeUrl()
+        }
+
+        val matcher = Patterns.WEB_URL.matcher(trimmed)
+        if (matcher.find()) {
+            val candidate = matcher.group()
+            return if (!candidate.startsWith("http://", ignoreCase = true) &&
+                !candidate.startsWith("https://", ignoreCase = true)
+            ) {
+                "https://$candidate"
+            } else {
+                candidate
+            }
+        }
+
+        return buildUrlOrSearch(trimmed)
+    }
+
     fun buildUrlOrSearch(input: String): String {
         val trimmed = input.trim()
         if (trimmed.isEmpty()) {

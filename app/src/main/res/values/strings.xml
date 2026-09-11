@@ -37,4 +37,11 @@
     <string name="custom_engine_hint">URL with %%s for query (e.g. https://kagi.com/search?q=%%s)</string>
     <string name="invalid_custom_engine">URL must contain %%s</string>
     <string name="save">Save</string>
+    <string name="github_repository">GitHub Repository</string>
+    <string name="github_contribute_desc">Contribute, report issues, or inspect code</string>
+    <string name="github_contribute_button">Contribute on GitHub</string>
+    <string name="set_default_browser_title">Default Browser</string>
+    <string name="set_default_browser_desc">Open links from apps like WhatsApp automatically</string>
+    <string name="already_default_browser">Easy Navigator is already your default browser</string>
+    <string name="default_browser_manual_settings">Please set Easy Navigator as default browser in Android Settings</string>
 </resources>

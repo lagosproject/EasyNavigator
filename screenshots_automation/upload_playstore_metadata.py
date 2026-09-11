@@ -8,16 +8,36 @@ tablet screenshots, feature graphics, and optionally AAB bundles using the Googl
 
 import os
 import sys
+import time
+import socket
 import argparse
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
+
+# Set default socket timeout to 120 seconds to prevent premature drops during large asset transfers
+socket.setdefaulttimeout(120)
 
 PACKAGE_NAME = "appinventor.ai_grmapal2.Navegator"
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, "output")
 
 DEFAULT_AAB_PATH = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "app", "build", "outputs", "bundle", "release", "app-release.aab"))
+
+def execute_with_retry(request_factory, max_retries=5, initial_delay=3):
+    """Executes a Google API request with exponential backoff on network errors/timeouts."""
+    delay = initial_delay
+    for attempt in range(1, max_retries + 1):
+        try:
+            req = request_factory()
+            return req.execute(num_retries=2)
+        except Exception as e:
+            if attempt == max_retries:
+                raise
+            print(f"    ⚠️ Request failed ({type(e).__name__}: {e}), retrying in {delay}s (attempt {attempt}/{max_retries})...")
+            time.sleep(delay)
+            delay *= 2
+
 
 def find_default_key_file():
     env_key = os.environ.get("PLAY_STORE_JSON_KEY")
@@ -122,7 +142,7 @@ def upload_listing_and_images_for_locale(service, edit_id, lang):
     # 1. Update text listing
     print(f"Updating store listing text for '{lang}'...")
     listing_info = METADATA[lang]
-    listing_res = service.edits().listings().update(
+    listing_res = execute_with_retry(lambda: service.edits().listings().update(
         packageName=PACKAGE_NAME,
         editId=edit_id,
         language=lang,
@@ -131,7 +151,7 @@ def upload_listing_and_images_for_locale(service, edit_id, lang):
             "shortDescription": listing_info["shortDescription"],
             "fullDescription": listing_info["fullDescription"]
         }
-    ).execute()
+    ))
     print(f"  ✓ Updated listing: title='{listing_res.get('title')}'")
     print(f"  ✓ Short description ({len(listing_info['shortDescription'])} chars)")
     print(f"  ✓ Full description ({len(listing_info['fullDescription'])} chars)")
@@ -140,12 +160,12 @@ def upload_listing_and_images_for_locale(service, edit_id, lang):
     def upload_images_for_type(image_type, image_paths):
         print(f"\nUploading {image_type} for '{lang}' ({len(image_paths)} images)...")
         try:
-            service.edits().images().deleteall(
+            execute_with_retry(lambda: service.edits().images().deleteall(
                 packageName=PACKAGE_NAME,
                 editId=edit_id,
                 language=lang,
                 imageType=image_type
-            ).execute()
+            ))
         except Exception as e:
             print(f"  (Notice on deleteall: {e})")
 
@@ -153,14 +173,16 @@ def upload_listing_and_images_for_locale(service, edit_id, lang):
             if not os.path.exists(img_path):
                 print(f"  ✗ File missing: {img_path}")
                 continue
-            media = MediaFileUpload(img_path, mimetype="image/png")
-            res = service.edits().images().upload(
-                packageName=PACKAGE_NAME,
-                editId=edit_id,
-                language=lang,
-                imageType=image_type,
-                media_body=media
-            ).execute()
+            def do_upload(path=img_path):
+                media = MediaFileUpload(path, mimetype="image/png")
+                return service.edits().images().upload(
+                    packageName=PACKAGE_NAME,
+                    editId=edit_id,
+                    language=lang,
+                    imageType=image_type,
+                    media_body=media
+                )
+            res = execute_with_retry(do_upload)
             img_id = res.get("image", {}).get("id")
             size_kb = os.path.getsize(img_path) // 1024
             print(f"  ✓ [{idx}/{len(image_paths)}] Uploaded {os.path.basename(img_path)} ({size_kb} KB) -> ID: {img_id}")
@@ -198,12 +220,14 @@ def upload_bundle_to_track(service, edit_id, bundle_path, track_name="internal")
         print(f"  ✗ AAB bundle file not found at: {bundle_path}")
         return None
     print(f"\n[AAB Upload] Uploading App Bundle: {bundle_path}...")
-    media = MediaFileUpload(bundle_path, mimetype="application/octet-stream")
-    bundle_res = service.edits().bundles().upload(
-        packageName=PACKAGE_NAME,
-        editId=edit_id,
-        media_body=media
-    ).execute()
+    def do_upload_bundle():
+        media = MediaFileUpload(bundle_path, mimetype="application/octet-stream")
+        return service.edits().bundles().upload(
+            packageName=PACKAGE_NAME,
+            editId=edit_id,
+            media_body=media
+        )
+    bundle_res = execute_with_retry(do_upload_bundle)
     version_code = bundle_res.get("versionCode")
     print(f"  ✓ Uploaded AAB bundle! Version code: {version_code}")
 
@@ -212,18 +236,36 @@ def upload_bundle_to_track(service, edit_id, bundle_path, track_name="internal")
         "track": track_name,
         "releases": [
             {
-                "name": f"Release {version_code}",
+                "name": f"Release {version_code} (18.2)",
                 "versionCodes": [str(version_code)],
-                "status": "completed"
+                "status": "completed",
+                "releaseNotes": [
+                    {
+                        "language": "es-ES",
+                        "text": "Actualización v18.2: optimización Edge-to-Edge completa con soporte para recortes de pantalla, eliminación de APIs obsoletas y reducción avanzada de recursos con R8."
+                    },
+                    {
+                        "language": "en-US",
+                        "text": "Update v18.2: Full Edge-to-Edge optimization with display cutout support, deprecated API removal, and advanced R8 resource shrinking."
+                    },
+                    {
+                        "language": "fr-FR",
+                        "text": "Mise à jour v18.2 : Optimisation Edge-to-Edge avec prise en charge des encoches, suppression des API obsolètes et réduction avancée des ressources R8."
+                    },
+                    {
+                        "language": "pt-PT",
+                        "text": "Atualização v18.2: Otimização Edge-to-Edge com suporte a recortes de ecrã, remoção de APIs obsoletas e redução avançada de recursos com R8."
+                    }
+                ]
             }
         ]
     }
-    service.edits().tracks().update(
+    execute_with_retry(lambda: service.edits().tracks().update(
         packageName=PACKAGE_NAME,
         editId=edit_id,
         track=track_name,
         body=track_body
-    ).execute()
+    ))
     print(f"  ✓ Successfully updated track '{track_name}'")
     return version_code
 
@@ -236,6 +278,7 @@ def main():
     parser.add_argument("--upload-bundle", action="store_true", help="Upload the release AAB bundle to Play Store")
     parser.add_argument("--bundle-path", default=DEFAULT_AAB_PATH, help=f"Path to release AAB bundle (default: {DEFAULT_AAB_PATH})")
     parser.add_argument("--track", default="internal", choices=["internal", "alpha", "beta", "production"], help="Track to assign the bundle to (default: internal)")
+    parser.add_argument("--skip-metadata", action="store_true", help="Skip updating store listings and screenshots")
     args = parser.parse_args()
 
     if not args.key or not os.path.exists(args.key):
@@ -249,16 +292,17 @@ def main():
     )
     service = build("androidpublisher", "v3", credentials=credentials)
 
-    edit_req = service.edits().insert(body={}, packageName=PACKAGE_NAME)
-    edit = edit_req.execute()
+    edit = execute_with_retry(lambda: service.edits().insert(body={}, packageName=PACKAGE_NAME))
     edit_id = edit["id"]
     print(f"Created edit session: {edit_id}")
 
     try:
-        locales = list(METADATA.keys()) if args.lang == "all" else [args.lang]
-
-        for loc in locales:
-            upload_listing_and_images_for_locale(service, edit_id, loc)
+        if not args.skip_metadata:
+            locales = list(METADATA.keys()) if args.lang == "all" else [args.lang]
+            for loc in locales:
+                upload_listing_and_images_for_locale(service, edit_id, loc)
+        else:
+            print("Skipping store listings and screenshots update (--skip-metadata)")
 
         if args.upload_bundle:
             upload_bundle_to_track(service, edit_id, args.bundle_path, track_name=args.track)
@@ -270,8 +314,22 @@ def main():
             service.edits().delete(packageName=PACKAGE_NAME, editId=edit_id).execute()
         else:
             print(f"\nCommitting edit {edit_id} to Google Play...")
-            commit_res = service.edits().commit(packageName=PACKAGE_NAME, editId=edit_id).execute()
+            try:
+                commit_res = execute_with_retry(lambda: service.edits().commit(
+                    packageName=PACKAGE_NAME,
+                    editId=edit_id
+                ))
+            except Exception as e:
+                if "changesNotSentForReview" in str(e):
+                    commit_res = execute_with_retry(lambda: service.edits().commit(
+                        packageName=PACKAGE_NAME,
+                        editId=edit_id,
+                        changesNotSentForReview=True
+                    ))
+                else:
+                    raise
             print(f"🎉 Successfully committed edit! Result ID: {commit_res.get('id')}")
+            print("👉 In Google Play Console UI, review the new release under the track and click 'Send for review' (Enviar a revisión).")
 
     except Exception as e:
         print(f"\n❌ Error encountered during Play Store update: {e}")

@@ -2,8 +2,11 @@
     <style name="Theme.EasyNavigator" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorSecondary">@color/accent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="bottomSheetDialogTheme">@style/Theme.EasyNavigator.BottomSheetDialog</item>
+    </style>
+
+    <style name="Theme.EasyNavigator.BottomSheetDialog" parent="Theme.Material3.DayNight.BottomSheetDialog">
+        <item name="enableEdgeToEdge">true</item>
     </style>
 </resources>

@@ -69,3 +69,7 @@ Desktop.ini
 *.swo
 *.bak
 .vscode/
+
+# Python
+__pycache__/
+*.pyc

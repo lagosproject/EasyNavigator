@@ -37,4 +37,11 @@
     <string name="custom_engine_hint">URL con %%s para la consulta (ej. https://kagi.com/search?q=%%s)</string>
     <string name="invalid_custom_engine">La URL debe contener %%s</string>
     <string name="save">Guardar</string>
+    <string name="github_repository">Repositorio de GitHub</string>
+    <string name="github_contribute_desc">Contribuye, reporta problemas o consulta el código</string>
+    <string name="github_contribute_button">Contribuir en GitHub</string>
+    <string name="set_default_browser_title">Navegador predeterminado</string>
+    <string name="set_default_browser_desc">Abre enlaces desde apps como WhatsApp automáticamente</string>
+    <string name="already_default_browser">Navegador fácil ya es tu navegador predeterminado</string>
+    <string name="default_browser_manual_settings">Configura Navegador fácil como navegador predeterminado en Ajustes</string>
 </resources>

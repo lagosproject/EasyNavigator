@@ -14,8 +14,8 @@ android {
         applicationId = "appinventor.ai_grmapal2.Navegator"
         minSdk = 21
         targetSdk = 36
-        versionCode = 22
-        versionName = "18.0"
+        versionCode = 24
+        versionName = "18.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -88,6 +88,9 @@ dependencies {
     // QR Code Scanning & Generating (ZXing)
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("com.google.zxing:core:3.5.3")
+
+    // Image loading, caching & memory optimization (Coil)
+    implementation("io.coil-kt:coil:2.7.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")

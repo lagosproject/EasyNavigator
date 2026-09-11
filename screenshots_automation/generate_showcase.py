@@ -229,14 +229,39 @@ def draw_vertical_gradient(width, height, top_color, bottom_color):
         draw.line([(0, y), (width, y)], fill=(r, g, b))
     return base
 
-def create_device_frame(inner_img, target_w, target_h, corner_radius=36):
-    scaled_w = target_w - 60
-    scaled_h = int(inner_img.height * (scaled_w / float(inner_img.width)))
+def wrap_text(text, font, max_width):
+    words = text.split()
+    lines = []
+    current_line = []
+    for word in words:
+        test_line = " ".join(current_line + [word])
+        bbox = font.getbbox(test_line)
+        w = bbox[2] - bbox[0]
+        if w <= max_width or not current_line:
+            current_line.append(word)
+        else:
+            lines.append(" ".join(current_line))
+            current_line = [word]
+    if current_line:
+        lines.append(" ".join(current_line))
+    return lines
+
+def create_device_frame(inner_img, target_w, target_h, corner_radius=28):
+    border_px = 10
+    avail_w = target_w - border_px * 2
+    avail_h = target_h - border_px * 2
+
+    scale_w = avail_w / float(inner_img.width)
+    scale_h = avail_h / float(inner_img.height)
+    scale = min(scale_w, scale_h)
+
+    scaled_w = int(inner_img.width * scale)
+    scaled_h = int(inner_img.height * scale)
     resized_screen = inner_img.resize((scaled_w, scaled_h), Image.Resampling.LANCZOS)
 
     # Frame dimensions
-    frame_w = scaled_w + 24
-    frame_h = scaled_h + 24
+    frame_w = scaled_w + border_px * 2
+    frame_h = scaled_h + border_px * 2
 
     # Create mask for rounded screen
     mask = Image.new("L", (scaled_w, scaled_h), 0)
@@ -246,67 +271,87 @@ def create_device_frame(inner_img, target_w, target_h, corner_radius=36):
     # Device body with rounded border
     frame = Image.new("RGBA", (frame_w, frame_h), (0, 0, 0, 0))
     draw_frame = ImageDraw.Draw(frame)
-    draw_frame.rounded_rectangle([0, 0, frame_w - 1, frame_h - 1], radius=corner_radius + 8, fill=(28, 36, 56, 255), outline=(66, 165, 245, 180), width=3)
-    frame.paste(resized_screen, (12, 12), mask)
+    draw_frame.rounded_rectangle(
+        [0, 0, frame_w - 1, frame_h - 1],
+        radius=corner_radius + 6,
+        fill=(28, 36, 56, 255),
+        outline=(66, 165, 245, 180),
+        width=3
+    )
+    frame.paste(resized_screen, (border_px, border_px), mask)
 
     # Add soft drop shadow
-    shadow_pad = 40
+    shadow_pad = 32
     shadow_img = Image.new("RGBA", (frame_w + shadow_pad * 2, frame_h + shadow_pad * 2), (0, 0, 0, 0))
     draw_shadow = ImageDraw.Draw(shadow_img)
     draw_shadow.rounded_rectangle(
-        [shadow_pad + 4, shadow_pad + 12, shadow_pad + frame_w - 4, shadow_pad + frame_h + 12],
-        radius=corner_radius + 12,
-        fill=(0, 0, 0, 160)
+        [shadow_pad, shadow_pad + 8, shadow_pad + frame_w, shadow_pad + frame_h + 8],
+        radius=corner_radius + 8,
+        fill=(0, 0, 0, 150)
     )
-    shadow_img = shadow_img.filter(ImageFilter.GaussianBlur(16))
+    shadow_img = shadow_img.filter(ImageFilter.GaussianBlur(14))
     shadow_img.paste(frame, (shadow_pad, shadow_pad), frame)
 
-    return shadow_img
+    return shadow_img, shadow_pad
 
 def render_showcase_card(screen_info, lang_data, width, height, is_tablet=False):
     card = draw_vertical_gradient(width, height, BG_TOP, BG_BOTTOM)
     draw = ImageDraw.Draw(card)
 
-    font_tag = get_font(26 if not is_tablet else 24, bold=True)
-    font_hl = get_font(52 if not is_tablet else 46, bold=True)
-    font_sub = get_font(30 if not is_tablet else 26, bold=False)
+    font_tag = get_font(24 if not is_tablet else 22, bold=True)
+    font_hl = get_font(46 if not is_tablet else 42, bold=True)
+    font_sub = get_font(28 if not is_tablet else 24, bold=False)
 
     raw_path = os.path.join(RAW_DIR, screen_info["file"])
     if os.path.exists(raw_path):
         screen_img = Image.open(raw_path).convert("RGBA")
     else:
         # Synthetic screen fallback
-        screen_img = Image.new("RGBA", (1080, 2100), (245, 247, 250, 255))
+        screen_img = Image.new("RGBA", (1080, 2412), (245, 247, 250, 255))
         s_draw = ImageDraw.Draw(screen_img)
         s_draw.rectangle([0, 0, 1080, 180], fill=(25, 118, 210, 255))
         s_draw.text((60, 60), "Easy Navigator", font=get_font(48), fill=(255, 255, 255))
 
     # Top typography section
-    pad_x = 70
-    start_y = 90 if not is_tablet else 70
+    pad_x = 70 if not is_tablet else (80 if width > 1100 else 70)
+    start_y = 80 if not is_tablet else 70
+    max_w = width - 2 * pad_x
 
     # Pill Tag
     tag_text = screen_info["tag"].upper()
     bbox = font_tag.getbbox(tag_text)
     tag_w = bbox[2] - bbox[0] + 32
-    tag_h = bbox[3] - bbox[1] + 16
-    draw.rounded_rectangle([pad_x, start_y, pad_x + tag_w, start_y + tag_h], radius=14, fill=PRIMARY)
+    tag_h = bbox[3] - bbox[1] + 18
+    draw.rounded_rectangle([pad_x, start_y, pad_x + tag_w, start_y + tag_h], radius=12, fill=PRIMARY)
     draw.text((pad_x + 16, start_y + 8), tag_text, font=font_tag, fill=WHITE)
 
-    # Headline
-    hl_y = start_y + tag_h + 24
-    draw.text((pad_x, hl_y), screen_info["headline"], font=font_hl, fill=WHITE)
+    # Headline (multi-line wrapped to avoid clipping)
+    hl_y = start_y + tag_h + 22
+    hl_lines = wrap_text(screen_info["headline"], font_hl, max_w)
+    curr_y = hl_y
+    for line in hl_lines:
+        draw.text((pad_x, curr_y), line, font=font_hl, fill=WHITE)
+        bbox_l = font_hl.getbbox(line)
+        curr_y += (bbox_l[3] - bbox_l[1]) + 12
 
-    # Subtext
-    sub_y = hl_y + 70
-    draw.text((pad_x, sub_y), screen_info["subtext"], font=font_sub, fill=MUTED)
+    # Subtext (multi-line wrapped to avoid clipping)
+    curr_y += 6
+    sub_lines = wrap_text(screen_info["subtext"], font_sub, max_w)
+    for line in sub_lines:
+        draw.text((pad_x, curr_y), line, font=font_sub, fill=MUTED)
+        bbox_s = font_sub.getbbox(line)
+        curr_y += (bbox_s[3] - bbox_s[1]) + 10
 
-    # Framed device placed in bottom half
-    device_w = int(width * 0.88)
-    framed = create_device_frame(screen_img, device_w, int(height * 0.65))
+    # Device placed cleanly below typography with comfortable margins
+    device_top_y = curr_y + 35
+    bottom_margin = 60
+    available_h = height - device_top_y - bottom_margin
+    available_w = int(width * 0.86)
+
+    framed, shadow_pad = create_device_frame(screen_img, available_w, available_h)
 
     pos_x = (width - framed.width) // 2
-    pos_y = height - framed.height + 15  # bleed slightly below canvas for edge aesthetics
+    pos_y = device_top_y - shadow_pad
     card.paste(framed, (pos_x, pos_y), framed)
 
     return card

@@ -1,11 +1,15 @@
 package appinventor.ai_grmapal2.Navegator
 
+import android.app.role.RoleManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.activity.result.contract.ActivityResultContracts
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +48,14 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val DESKTOP_USER_AGENT =
             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+        private const val GITHUB_REPO_URL =
+            "https://github.com/lagosproject/EasyNavigator"
+    }
+
+    private val defaultBrowserLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { _ ->
+        // User handled role request dialog
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,14 +64,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Handle WindowInsets for API 35/36 Edge-to-Edge compliance
+        // Handle WindowInsets for API 35/36 Edge-to-Edge compliance including display cutouts (notches)
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootCoordinator) { _, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val safeInsets = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or
+                WindowInsetsCompat.Type.displayCutout()
+            )
             binding.mainContentContainer.setPadding(
-                systemBars.left,
-                systemBars.top,
-                systemBars.right,
-                systemBars.bottom
+                safeInsets.left,
+                safeInsets.top,
+                safeInsets.right,
+                safeInsets.bottom
             )
             insets
         }
@@ -83,10 +98,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleIntent(intent: Intent?) {
-        val data: Uri? = intent?.data
+        if (intent == null) {
+            if (currentPageUrl.isEmpty()) {
+                loadUrl(searchManager.getHomeUrl())
+            }
+            return
+        }
+
+        // Handle text/link shared via ACTION_SEND (e.g. from WhatsApp)
+        if (intent.action == Intent.ACTION_SEND && intent.type == "text/plain") {
+            val sharedText = intent.getStringExtra(Intent.EXTRA_TEXT)
+            if (!sharedText.isNullOrBlank()) {
+                loadUrl(searchManager.extractUrlOrInput(sharedText))
+                return
+            }
+        }
+
+        // Handle URL opened via ACTION_VIEW
+        val data: Uri? = intent.data
         if (data != null) {
-            loadUrl(data.toString())
-        } else if (currentPageUrl.isEmpty()) {
+            val target = data.toString().trim()
+            if (target.isNotEmpty()) {
+                loadUrl(target)
+                return
+            }
+        }
+
+        if (currentPageUrl.isEmpty()) {
             loadUrl(searchManager.getHomeUrl())
         }
     }
@@ -356,6 +394,8 @@ class MainActivity : AppCompatActivity() {
         val switchDesktop = view.findViewById<MaterialSwitch>(R.id.switchDesktopSite)
         val rowEngine = view.findViewById<LinearLayout>(R.id.rowSearchEngine)
         val tvEngine = view.findViewById<TextView>(R.id.tvCurrentSearchEngine)
+        val rowDefaultBrowser = view.findViewById<LinearLayout>(R.id.rowDefaultBrowser)
+        val rowGithub = view.findViewById<LinearLayout>(R.id.rowGithub)
         val rowClear = view.findViewById<LinearLayout>(R.id.rowClearAllData)
         val rowAbout = view.findViewById<LinearLayout>(R.id.rowAbout)
 
@@ -397,6 +437,16 @@ class MainActivity : AppCompatActivity() {
         rowEngine.setOnClickListener {
             dialog.dismiss()
             showSearchEngineDialog()
+        }
+
+        rowDefaultBrowser.setOnClickListener {
+            dialog.dismiss()
+            requestDefaultBrowserRole()
+        }
+
+        rowGithub.setOnClickListener {
+            dialog.dismiss()
+            loadUrl(GITHUB_REPO_URL)
         }
 
         rowClear.setOnClickListener {
@@ -496,7 +546,37 @@ class MainActivity : AppCompatActivity() {
             .setTitle(getString(R.string.about_title))
             .setMessage(getString(R.string.about_text))
             .setPositiveButton(getString(R.string.close), null)
+            .setNeutralButton(getString(R.string.github_contribute_button)) { _, _ ->
+                loadUrl(GITHUB_REPO_URL)
+            }
             .show()
+    }
+
+    private fun requestDefaultBrowserRole() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val roleManager = getSystemService(RoleManager::class.java)
+            if (roleManager != null && roleManager.isRoleAvailable(RoleManager.ROLE_BROWSER)) {
+                if (!roleManager.isRoleHeld(RoleManager.ROLE_BROWSER)) {
+                    val roleIntent = roleManager.createRequestRoleIntent(RoleManager.ROLE_BROWSER)
+                    defaultBrowserLauncher.launch(roleIntent)
+                } else {
+                    Toast.makeText(this, getString(R.string.already_default_browser), Toast.LENGTH_SHORT).show()
+                }
+                return
+            }
+        }
+
+        try {
+            val intent = Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS)
+            startActivity(intent)
+        } catch (e: Exception) {
+            try {
+                val intent = Intent(Settings.ACTION_SETTINGS)
+                startActivity(intent)
+            } catch (e2: Exception) {
+                Toast.makeText(this, getString(R.string.default_browser_manual_settings), Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun hideKeyboard() {
