@@ -1,12 +1,12 @@
 <p align="center">
   <img src="assets/icon.png" alt="Easy Navigator Logo" width="140" height="140" style="border-radius: 24%;" /><br>
   <h1 align="center">Easy Navigator</h1>
-  <p align="center"><b>Navegación web rápida, privada y 100% efímera para tu día a día.</b></p>
+  <p align="center"><b>Fast, lightweight, and strictly ephemeral web browsing for your daily workflow.</b></p>
 </p>
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=appinventor.ai_grmapal2.Navegator">
-    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Disponible en Google Play" height="58" />
+    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="58" />
   </a>
 </p>
 
@@ -19,123 +19,122 @@
 
 ---
 
-## 🌟 ¿Qué es Easy Navigator?
+## 🌟 What is Easy Navigator?
 
-**Easy Navigator** es un navegador web ultra-ligero diseñado para cualquier persona que desee consultar páginas de internet de forma inmediata sin preocuparse por rastreadores ni publicidad invasiva. A diferencia de los navegadores convencionales que acumulan historiales eternos y contraseñas en tu teléfono, Easy Navigator funciona en modo efímero continuo: cada vez que sales de la aplicación o pulsas su botón de purga, todos los rastros, archivos temporales y cookies se eliminan por completo al instante.
+**Easy Navigator** is a lightweight, privacy-first web browser designed for anyone who wants to browse the internet quickly without intrusive tracking, persistent cookies, or endless history logs cluttering their device. Unlike conventional browsers that quietly store your passwords and track your activity across sessions, Easy Navigator operates in continuous ephemeral mode: the moment you exit the app or tap the quick wipe button, all session traces, cookies, and temporary caches vanish immediately.
 
-Es la herramienta perfecta para búsquedas rápidas, abrir enlaces compartidos por WhatsApp o redes sociales, leer noticias y escanear menús o códigos QR de forma limpia, sin dejar huella en tu dispositivo.
-
----
-
-## ✨ Características Principales (Diseñadas para ti)
-
-- 🛡️ **Privacidad Absoluta y Efímera:** Navega con tranquilidad. No almacena historial persistente, no guarda tus contraseñas ni deja rastro en la memoria de tu móvil.
-- 🔥 **Botón de Incineración Rápida:** Con solo tocar el icono de fuego en la esquina superior, limpias al instante la página abierta, las cookies y la memoria temporal.
-- 🎙️ **Búsqueda por Voz Integrada:** Olvídate de teclear en pantallas pequeñas. Toca el micrófono, di lo que estás buscando y accede a los resultados de inmediato.
-- 📷 **Lector y Generador de Códigos QR:**
-  - **Escanea:** Apunta tu cámara hacia cualquier código QR de un restaurante, evento o cartel para entrar en la página web automáticamente.
-  - **Comparte:** Genera un código QR de la página que estás viendo en tu pantalla para que otra persona lo escanee con su teléfono al instante.
-- 🔍 **Tus Buscadores Favoritos:** Alterna fácilmente entre Google, DuckDuckGo, Bing, Ecosia o añade el buscador que más te guste.
-- ⚡ **Rápido y Amigable con tu Batería:** Desarrollado para abrirse al instante, sin procesos pesados que ralenticen tu móvil o consuman tu batería en segundo plano.
-- 🖥️ **Modo Ordenador / Escritorio:** Si alguna web no se visualiza bien en formato móvil, activa el modo escritorio con un solo toque en el menú.
-- 🔄 **Deslizar para Actualizar:** Recarga cualquier página web cómodamente deslizando el dedo hacia abajo.
+It is the perfect companion for quick searches, opening links from messaging apps and social media, reading articles, and scanning QR codes cleanly without leaving digital footprints behind.
 
 ---
 
-## 📱 Capturas de Pantalla
+## ✨ Key Features (Designed for You)
+
+- 🛡️ **True Ephemeral Privacy:** Browse with peace of mind. No persistent history, no saved credentials or form data, and zero local tracking on your mobile device.
+- 🔥 **Instant Incinerate / Session Wipe:** Tap the fire icon at the top of the screen to purge open pages, cache, and cookies with a single touch.
+- 🎙️ **Integrated Voice Search:** Avoid typing on small keyboards. Simply tap the microphone icon, speak your query, and view results instantly.
+- 📷 **QR Code Scanner & Generator:**
+  - **Scan:** Point your camera at any QR code (in restaurants, events, or posters) to navigate to the link immediately.
+  - **Share:** Instantly generate an on-screen QR code of the webpage you are viewing so friends or colleagues can scan and open it on their devices.
+- 🔍 **Customizable Search Engines:** Easily switch between Google, DuckDuckGo, Bing, Ecosia, or configure your own favorite custom search provider.
+- ⚡ **Lightweight & Battery Friendly:** Opens instantly with minimal resource overhead, keeping your device fast and preserving battery life.
+- 🖥️ **One-Tap Desktop Site:** Switch easily between mobile and full desktop view whenever a webpage requires larger layout rendering.
+- 🔄 **Calibrated Pull-to-Refresh:** Smoothly reload webpages by dragging down without accidental triggers during regular scrolling.
+
+---
+
+## 📱 Screenshots & Showcase
 
 <p align="center">
-  <img src="assets/banner.png" alt="Easy Navigator Banner" width="100%" />
+  <img src="assets/banner.png" alt="Easy Navigator Showcase Banner" width="100%" />
 </p>
 
-| 🏠 Pantalla de Inicio | 🔍 Búsqueda y Voz | 📷 Compartir con QR | ⚙️ Menú de Opciones | 🔥 Purgar Sesión |
+| 🏠 Home Screen | 🔍 Search & Voice | 📷 QR Code Share | ⚙️ Settings Menu | 🔥 Incinerate Session |
 | :---: | :---: | :---: | :---: | :---: |
-| <img src="assets/screenshots/screen1_home.png" width="185" alt="Inicio" /> | <img src="assets/screenshots/screen2_search.png" width="185" alt="Búsqueda" /> | <img src="assets/screenshots/screen3_qr.png" width="185" alt="QR Share" /> | <img src="assets/screenshots/screen4_menu.png" width="185" alt="Menú" /> | <img src="assets/screenshots/screen5_wipe.png" width="185" alt="Wipe" /> |
+| <img src="assets/screenshots/screen1_home.png" width="185" alt="Home Screen" /> | <img src="assets/screenshots/screen2_search.png" width="185" alt="Search and Voice" /> | <img src="assets/screenshots/screen3_qr.png" width="185" alt="QR Code Share" /> | <img src="assets/screenshots/screen4_menu.png" width="185" alt="Options Menu" /> | <img src="assets/screenshots/screen5_wipe.png" width="185" alt="Incinerate Session" /> |
 
 ---
 
 <details>
-<summary><b>🛠️ Guía Técnica para Desarrolladores & Arquitectura (Click para desplegar)</b></summary>
+<summary><b>🛠️ Developer Guide & Technical Architecture (Click to expand)</b></summary>
 <br>
 
-### 🏗️ Arquitectura y Tecnologías
+### 🏗️ Architecture & Technologies
 
-Easy Navigator está desarrollado en **Kotlin nativo**, siguiendo las mejores prácticas de la plataforma Android moderna:
+Easy Navigator is built with modern, native Android components adhering to current best practices:
 
-- **Lenguaje:** Kotlin 2.0.20 con JVM Target 17.
-- **SDK Targets:** `minSdk = 21` (Android 5.0 Lollipop), `compileSdk = 36` / `targetSdk = 36` (Android 16).
-- **UI / Rendering:** Android ViewBinding, AndroidX Edge-to-Edge (`enableEdgeToEdge`), Material Design 3 Components.
-- **WebView Engine:** AndroidX WebKit (`androidx.webkit:webkit:1.12.1`) configurado con políticas estrictas de privacidad:
+- **Language:** Kotlin 2.0.20 targeting JVM 17.
+- **Android SDK Targets:** `minSdk = 21` (Android 5.0 Lollipop), `compileSdk = 36` / `targetSdk = 36` (Android 16).
+- **UI & Layout:** ViewBinding, AndroidX Edge-to-Edge (`enableEdgeToEdge`), Material Design 3 Components.
+- **Privacy WebView Engine:** AndroidX WebKit (`androidx.webkit:webkit:1.12.1`) configured with strict isolation and zero disk persistence:
   - `cacheMode = LOAD_NO_CACHE`
   - `saveFormData = false`, `savePassword = false`
   - `geolocationEnabled = false`, `databaseEnabled = false`
   - `allowFileAccess = false`, `allowContentAccess = false`
   - `mixedContentMode = MIXED_CONTENT_NEVER_ALLOW`
-  - Limpieza forzada de `CookieManager` y `WebStorage` al salir o invocar `wipeSession()`.
-- **Código QR:** Integración con biblioteca ZXing (`zxing-android-embedded` y `zxing:core`).
-- **Dictado por Voz:** `SpeechRecognizer` nativo con contrato de actividad moderno `ActivityResultContracts`.
+  - Full purge of `CookieManager`, `WebStorage` (DOM/IndexedDB), and cache directories upon exit or explicit wipe.
+- **QR Code Scanning & Generation:** ZXing Android Embedded (`zxing-android-embedded`) and ZXing Core (`zxing:core`).
+- **Voice Recognition:** Native Android `SpeechRecognizer` via modern `ActivityResultContracts`.
 
-### 📋 Requisitos Previos
+### 📋 Prerequisites
 
-- **JDK:** Java Development Kit 17 o superior.
-- **Android SDK:** Android SDK Build-Tools 36.0.0 y Platform API 36 instalados.
-- **Gradle:** Wrapper Gradle 8.11.1 incluido en el proyecto (`./gradlew`).
+- **JDK:** Java Development Kit 17 or later.
+- **Android SDK:** Android SDK Build-Tools 36.0.0 and Platform API 36 installed.
+- **Gradle:** Gradle 8.11.1 wrapper provided (`./gradlew`).
 
-### 🚀 Compilación y Ejecución Local
+### 🚀 Local Build & Run Instructions
 
-1. **Clonar el repositorio:**
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/lagosproject/EasyNavigator.git
    cd EasyNavigator
    ```
 
-2. **Configurar el entorno local:**
-   - Copia el archivo de ejemplo para configurar la ruta de tu SDK:
-     ```bash
-     cp local.properties.example local.properties
-     # Edita local.properties indicando la ruta de tu Android SDK si no la detecta automáticamente
-     ```
+2. **Configure local properties:**
+   ```bash
+   cp local.properties.example local.properties
+   # Adjust sdk.dir if Android Studio / SDK is in a custom path
+   ```
 
-3. **Compilar en modo Debug:**
+3. **Build Debug APK:**
    ```bash
    ./gradlew assembleDebug
    ```
 
-4. **Instalar en un dispositivo o emulador conectado:**
+4. **Install on a connected device or emulator:**
    ```bash
    ./gradlew installDebug
    ```
 
-5. **Compilar versión Release:**
-   Para firmar la versión de producción, define las variables en tu entorno o en `keystore.properties`:
+5. **Build Release APK / AAB:**
+   Configure your signing credentials via environment variables or `keystore.properties`:
    ```bash
    cp keystore.properties.example keystore.properties
-   # O exporta KEYSTORE_PATH, KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD
+   # Or export KEYSTORE_PATH, KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD
    ./gradlew assembleRelease
    ```
 
-### 🤖 Automatización de Capturas y Publicación
+### 🤖 Automation Scripts
 
-El repositorio incluye herramientas automáticas en la carpeta `screenshots_automation/`:
-- `capture_device_screens.sh`: Captura las pantallas del dispositivo mediante comandos ADB.
-- `generate_showcase.py`: Genera los gráficos de muestra para teléfonos, tabletas de 7", tabletas de 10" y banner destacado en 4 idiomas (`es-ES`, `en-US`, `fr-FR`, `pt-PT`).
-- `upload_playstore_metadata.py`: Publica los metadatos y gráficos en Google Play Store a través de la Google Play Developer API usando una cuenta de servicio.
+The repository includes helper scripts inside `screenshots_automation/`:
+- `capture_device_screens.sh`: Automated ADB script for capturing device screens across key user flows.
+- `generate_showcase.py`: Python Pillow pipeline that produces localized store cards for Phone, 7" Tablet, 10" Tablet, and Feature Banners across 4 locales (`en-US`, `es-ES`, `fr-FR`, `pt-PT`).
+- `upload_playstore_metadata.py`: Automated Google Play Developer API publisher for store listings and graphical assets.
 
 </details>
 
 ---
 
-## 🤝 Cómo Contribuir
+## 🤝 Contributing
 
-¡Las contribuciones son bienvenidas! Si deseas reportar un error, sugerir mejoras o aportar código:
-1. Revisa [CONTRIBUTING.md](CONTRIBUTING.md) para conocer las pautas de desarrollo.
-2. Consulta nuestra [Política de Seguridad](SECURITY.md) para reportar vulnerabilidades de privacidad.
-3. Abre un Issue o envía un Pull Request siguiendo nuestras convenciones de Conventional Commits.
+Contributions are welcome! If you would like to report a bug, suggest an improvement, or submit code:
+1. Please read our [Contributing Guidelines](CONTRIBUTING.md).
+2. Review our [Security Policy](SECURITY.md) for reporting privacy or security vulnerabilities.
+3. Open an Issue or submit a Pull Request following Conventional Commits.
 
 ---
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está distribuido bajo la licencia **MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 
-Desarrollado y mantenido con ❤️ por **[lagosproject](https://github.com/lagosproject)**.
+Developed and maintained with ❤️ by **[lagosproject](https://github.com/lagosproject)**.
