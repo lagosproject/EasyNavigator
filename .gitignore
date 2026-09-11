@@ -1,0 +1,71 @@
+# ==============================================================================
+# Android & Kotlin .gitignore for Easy Navigator
+# ==============================================================================
+
+# Built application files
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+
+# Output and build directories
+bin/
+gen/
+out/
+build/
+**/build/
+captures/
+.gradle/
+.kotlin/
+
+# Android Studio & IntelliJ IDEA
+*.iml
+*.ipr
+*.iws
+.idea/
+.shelf/
+
+# Local & machine-specific configuration
+local.properties
+keystore.properties
+*.keystore
+*.jks
+playstore-key.json
+*.key
+*.p8
+*.p12
+*.pem
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Native build artifacts
+.externalNativeBuild/
+.cxx/
+ndkBuild/
+
+# Google Services & Firebase (if added in the future)
+google-services.json
+
+# Log files
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Editors and temp files
+*~
+*.swp
+*.swo
+*.bak
+.vscode/
